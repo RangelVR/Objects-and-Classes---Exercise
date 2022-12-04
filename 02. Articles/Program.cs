@@ -1,21 +1,18 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Text;
 
-namespace Articles
+namespace _02.Articles
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-            string[] input = Console.ReadLine()
-                .Split(", ", StringSplitOptions.RemoveEmptyEntries)
-                .ToArray();
+            string[] input = Console.ReadLine().Split(", ").ToArray();
             int n = int.Parse(Console.ReadLine());
             int counter = 0;
 
-            Article newArticle = new Article()
+            Article newArticle = new Article() 
             {
                 Title = input[0],
                 Content = input[1],
@@ -24,34 +21,33 @@ namespace Articles
 
             while (counter != n)
             {
-                string[] comandArr = Console.ReadLine()
-                    .Split(": ", StringSplitOptions.RemoveEmptyEntries)
-                    .ToArray();
+                string[] command = Console.ReadLine().Split(": ").ToArray();
 
-
-                if (comandArr[0] == "Edit")
+                if (command[0] == "Edit")
                 {
-                    newArticle.Edit(comandArr[1]);
+                    newArticle.Edit(command[1]);
                 }
-                else if (comandArr[0] == "ChangeAuthor")
+                else if (command[0] == "ChangeAuthor")
                 {
-                    newArticle.ChangeAuthor(comandArr[1]);
+                    newArticle.ChangeAuthor(command[1]);
                 }
-                else if (comandArr[0] == "Rename")
+                else if (command[0] == "Rename")
                 {
-                    newArticle.Rename(comandArr[1]);
+                    newArticle.Rename(command[1]);
                 }
                 counter++;
             }
-
             Console.WriteLine(newArticle);
-        }
-
-       
+        } 
+        
     }
 
     class Article
     {
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public string Author { get; set; }
+
         public void Edit(string newContent)
         {
             Content = newContent;
@@ -62,22 +58,16 @@ namespace Articles
             Author = newAuthor;
         }
 
-        public void Rename(string newTitle) 
+        public void Rename(string newTitle)
         {
             Title = newTitle;
         }
 
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public string Author { get; set; }
-
         public override string ToString()
         {
-            //StringBuilder sb = new StringBuilder($"{Title} - {Content}: {Author}");
-            //return sb.ToString().TrimEnd();
-
-            return $"{Title} - {Content}: {Author}";
+            //return $"{Title} - {Content}: {Author}";
+            StringBuilder sb = new StringBuilder($"{Title} - {Content}: {Author}");
+            return sb.ToString().TrimEnd();
         }
-
     }
 }
