@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,12 +38,17 @@ namespace _03.Articles_2_0
             }
             else if (command == "author")
             {
-                catalog = catalog.OrderBy(x => x.Author).ToList();
+               catalog = catalog.OrderBy(x => x.Author).ToList();
             }
 
-            Console.WriteLine(string.Join(Environment.NewLine, catalog));
-        }
+            //Console.WriteLine(string.Join(Environment.NewLine, catalog));
 
+            foreach (Article article in catalog)
+            {
+                Console.WriteLine(article);
+            }
+        } 
+        
     }
 
     class Article
@@ -59,4 +64,6 @@ namespace _03.Articles_2_0
             return sb.ToString().TrimEnd();
         }
     }
+
+    
 }
