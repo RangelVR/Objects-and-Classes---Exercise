@@ -1,57 +1,52 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Students
+namespace _04.Students
 {
-    class Student
-    {
-        public Student(string firstName, string lastName, double grade)
-        {
-            FirstName = firstName;
-
-            LastName = lastName;
-
-            Grade = grade;
-        }
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
-        public double Grade { get; set; }
-
-        public override string ToString()
-        {
-            return $"{FirstName} {LastName}: {Grade:f2}";
-        }
-    }
     class Program
     {
         static void Main(string[] args)
         {
-            int countOfStudents = int.Parse(Console.ReadLine());
+            int n = int.Parse(Console.ReadLine());
+            int counter = 0;
 
-            var listOfStudents = new List<Student>();
+            List<Student> listOfStudents = new List<Student>();
 
-            for (int i = 0; i < countOfStudents; i++)
+            while (counter != n)
             {
-                string[] student = Console.ReadLine()
-                    .Split(" ", StringSplitOptions.RemoveEmptyEntries)
-                    .ToArray();
+                string[] currStudent = Console.ReadLine().Split().ToArray();
 
-                string firstName = student[0];
-                string lastName = student[1];
-                double grade = double.Parse(student[2]);
-
-                Student newStudent = new Student(firstName, lastName, grade);
-
+                Student newStudent = new Student() 
+                {
+                    FirstName = currStudent[0],
+                    SecondName = currStudent[1],
+                    Grade = double.Parse(currStudent[2])
+                };
                 listOfStudents.Add(newStudent);
+                counter++;
             }
 
-            listOfStudents = listOfStudents.OrderByDescending(x => x.Grade)
-                .ToList();
+            listOfStudents = listOfStudents.OrderByDescending(x => x.Grade).ToList();
 
-            Console.WriteLine(string.Join(Environment.NewLine, listOfStudents));
+            foreach (Student student in listOfStudents)
+            {
+                Console.WriteLine(student);
+            }
+        } 
+        
+    }
+
+    class Student 
+    {
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
+        public double Grade { get; set; }
+
+        public override string ToString()
+        {
+            return $"{FirstName} {SecondName}: {Grade:f2}";
         }
     }
+    
 }
