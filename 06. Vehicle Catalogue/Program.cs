@@ -1,100 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Vehicle_Catalogue
+namespace _06.Vehicle_Catalogue
 {
-    class Program
+    class Vehicles
     {
-
-        static void Main(string[] args)
+        public Vehicles(string type, string model, string color, double power)
         {
-            List<Vehicle> catalog = new List<Vehicle>();
-
-            while (true)
-            {
-                string[] vehicle = Console.ReadLine()
-                    .Split(" ", StringSplitOptions.RemoveEmptyEntries)
-                    .ToArray();
-
-                if (vehicle[0] == "End")
-                {
-                    break;
-                }
-
-                string type = vehicle[0];
-                string model = vehicle[1];
-                string color = vehicle[2];
-                double power = double.Parse(vehicle[3]);
-
-                Vehicle newVehicle = new Vehicle(type, model, color, power);
-
-                catalog.Add(newVehicle);
-
-            }
-
-            while (true)
-            {
-                string modelOf = Console.ReadLine();
-
-                if (modelOf == "Close the Catalogue")
-                {
-                    break;
-                }
-
-                Console.WriteLine(catalog.Find(x => x.Model == modelOf));
-            }
-
-            List<Vehicle> onlyCars = catalog.Where(x => x.Type == "car").ToList();
-            List<Vehicle> onlyTrucks = catalog.Where(x => x.Type == "truck").ToList();
-            double totalHpCars = 0;
-            double totalHpTrucks = 0;
-
-            foreach (Vehicle car in onlyCars)
-            {
-                totalHpCars += car.HorsePower;
-            }
-
-            foreach (Vehicle truck in onlyTrucks)
-            {
-                totalHpTrucks += truck.HorsePower;
-            }
-
-            double averageHpCars = totalHpCars / onlyCars.Count;
-            double averageHpTrucs = totalHpTrucks / onlyTrucks.Count;
-
-            if (onlyCars.Count > 0)
-            {
-                Console.WriteLine($"Cars have average horsepower of: {averageHpCars:f2}.");
-            }
-            else
-            {
-                Console.WriteLine($"Cars have average horsepower of: {0:f2}.");
-            }
-            if (onlyTrucks.Count > 0)
-            {
-                Console.WriteLine($"Trucks have average horsepower of: {averageHpTrucs:f2}.");
-            }
-            else
-            {
-                Console.WriteLine($"Trucks have average horsepower of: {0:f2}.");
-            }
-
+            Type = type;
+            Model = model;
+            Color = color;
+            HorsePower = power;
         }
-
-        
-    }
-
-    class Vehicle
-    {
-        public Vehicle(string type, string model, string color, double power)
-        {
-            this.Type = type;
-            this.Model = model;
-            this.Color = color;
-            this.HorsePower = power;
-        }
-
         public string Type { get; set; }
         public string Model { get; set; }
         public string Color { get; set; }
@@ -102,14 +20,84 @@ namespace Vehicle_Catalogue
 
         public override string ToString()
         {
-            string print = $"Type: {(this.Type == "car" ? "Car" : "Truck")}{Environment.NewLine}" +
-                $"Model: {this.Model}{Environment.NewLine}" +
-                $"Color: {this.Color}{Environment.NewLine}" +
-                $"Horsepower: {this.HorsePower}";
+            string print = $"Type: {(Type == "car" ? "Car" : "Truck")}{Environment.NewLine}" +
+                $"Model: {Model}{Environment.NewLine}" +
+                $"Color: {Color}{Environment.NewLine}" +
+                $"Horsepower: {HorsePower}";
 
             return print;
         }
-        
+    }
+
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Vehicles> catalog = new List<Vehicles>();
+
+            while (true)
+            {
+                string[] arr = Console.ReadLine().Split().ToArray();
+
+                if (arr[0] == "End")
+                {
+                    break;
+                }
+                
+                string type = arr[0];
+                string model = arr[1];
+                string color = arr[2];
+                double power = double.Parse(arr[3]);
+
+                Vehicles newVehicle = new Vehicles(type, model, color, power);
+
+                catalog.Add(newVehicle);
+            }
+
+            while (true)
+            {
+                string command = Console.ReadLine();
+                if (command == "Close the Catalogue")
+                {
+                    break;
+                }
+                Console.WriteLine(catalog.Find(x => x.Model == command));
+            }
+
+            List<Vehicles> cars = catalog.Where(x => x.Type == "car").ToList();
+            List<Vehicles> trucks = catalog.Where(x => x.Type == "truck").ToList();
+
+            double hpCars = 0;
+            double hpTrucks = 0;
+            foreach (var car in cars)
+            {
+                hpCars += car.HorsePower;
+            }
+            foreach (var truck in trucks)
+            {
+                hpTrucks += truck.HorsePower;
+            }
+
+            if (cars.Count > 0)
+            {
+                
+                Console.WriteLine($"Cars have average horsepower of: {(hpCars / cars.Count):f2}.");
+            }
+            else
+            {
+                Console.WriteLine($"Cars have average horsepower of: {0:f2}.");
+            }
+
+            if (trucks.Count > 0)
+            {
+                Console.WriteLine($"Trucks have average horsepower of: {(hpTrucks / trucks.Count):f2}.");
+            }
+            else
+            {
+                Console.WriteLine($"Trucks have average horsepower of: {0:f2}.");
+            }
+        }
     }
 }
 -----------------------------------------------------------------------------------------------------------
