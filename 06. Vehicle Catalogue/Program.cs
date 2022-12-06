@@ -112,3 +112,126 @@ namespace Vehicle_Catalogue
         
     }
 }
+-----------------------------------------------------------------------------------------------------------
+    
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace _06.Vehicle_Catalogue
+{
+    class Vehicles
+    {
+        public Vehicles(string type, string model, string color, double horsePower)
+        {
+            Type = type;
+            Model = model;
+            Color = color;
+            HorsePower = horsePower;
+        }
+        public string Type { get; set; }
+        public string Model { get; set; }
+        public string Color { get; set; }
+        public double HorsePower { get; set; }
+
+        public override string ToString()
+        {
+            string print = $"Type: {this.Type}{Environment.NewLine}" +
+                $"Model: {this.Model}{Environment.NewLine}" +
+                $"Color: {this.Color}{Environment.NewLine}" +
+                $"Horsepower: {this.HorsePower}";
+
+            return print;
+        }
+    }
+
+    class Catalog
+    {
+        public Catalog()
+        {
+            Cars = new List<Vehicles>();
+            Trucks = new List<Vehicles>();
+        }
+        public List<Vehicles> Cars { get; set; }
+        public List<Vehicles> Trucks { get; set; }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string command;
+
+            Catalog catalog = new Catalog();
+
+            while ((command = Console.ReadLine()) != "End")
+            {
+                string[] commArr = command.Split().ToArray();
+                string type = commArr[0];
+                string model = commArr[1];
+                string color = commArr[2];
+                double horsePower = double.Parse(commArr[3]);
+
+                if (type == "car")
+                {
+                    type = "Car";
+                    Vehicles newCar = new Vehicles(type, model, color, horsePower);
+                    catalog.Cars.Add(newCar);
+                }
+                else 
+                {
+                    type = "Truck";
+                    Vehicles newTruck = new Vehicles(type, model, color, horsePower);
+                    catalog.Trucks.Add(newTruck);
+                }
+            }
+
+            while ((command = Console.ReadLine()) != "Close the Catalogue")
+            {
+                foreach (var car in catalog.Cars)
+                {
+                    if (command == car.Model)
+                    {
+                        Console.WriteLine(car);
+                    }
+                }
+                foreach (var truck in catalog.Trucks)
+                {
+                    if (command == truck.Model)
+                    {
+                        Console.WriteLine(truck);
+                    }
+                }
+            }
+            double totalHpCars = 0;
+            double totalHpTrucks = 0;
+
+            foreach (var car in catalog.Cars)
+            {
+                 totalHpCars += car.HorsePower;
+            }
+            foreach (var truck in catalog.Trucks)
+            {
+                 totalHpTrucks += truck.HorsePower;
+            }
+
+            if (catalog.Cars.Count > 0)
+            {
+                Console.WriteLine($"Cars have average horsepower of: {totalHpCars / catalog.Cars.Count:f2}.");
+            }
+            else
+            {
+                Console.WriteLine($"Cars have average horsepower of: {0:f2}.");
+            }
+
+            if (catalog.Trucks.Count > 0)
+            {
+                Console.WriteLine($"Trucks have average horsepower of: {(totalHpTrucks / catalog.Trucks.Count):f2}.");
+            }
+            else
+            {
+                Console.WriteLine($"Trucks have average horsepower of: {0:f2}.");
+            }
+        }
+    }
+}
