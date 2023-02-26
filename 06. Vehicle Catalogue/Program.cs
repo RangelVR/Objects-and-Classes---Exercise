@@ -1,14 +1,14 @@
 using System.Runtime.CompilerServices;
 using System.Text;
 
-string info = Console.ReadLine();
+string vehicleInfo = Console.ReadLine();
 
 List<Vehicle> carsList = new List<Vehicle>();
 List<Vehicle> truckLlist = new List<Vehicle>();
 
-while (info != "End")
+while (vehicleInfo != "End")
 {
-    string[] infoArr = info.Split();
+    string[] infoArr = vehicleInfo.Split();
 
     string type = infoArr[0];
     string model = infoArr[1];
@@ -26,7 +26,7 @@ while (info != "End")
         truckLlist.Add(truck);
     }
 
-    info = Console.ReadLine();
+    vehicleInfo = Console.ReadLine();
 }
 
 string make = Console.ReadLine();
