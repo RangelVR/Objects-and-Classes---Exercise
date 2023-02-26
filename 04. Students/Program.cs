@@ -1,52 +1,40 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+int studentCount = int.Parse(Console.ReadLine());
 
-namespace _04.Students
+List<Student> studentsList = new List<Student>();
+
+while (studentCount > 0)
 {
-    class Program
+    string[] studentInfo = Console.ReadLine().Split();
+    string firstName = studentInfo[0];
+    string lastName = studentInfo[1];
+    double grade = double.Parse(studentInfo[2]);
+
+    Student student = new Student
     {
-        static void Main(string[] args)
-        {
-            int n = int.Parse(Console.ReadLine());
-            int counter = 0;
+        FirstName = firstName,
+        LastName = lastName,
+        Grade = grade
+    };
+    studentsList.Add(student);
 
-            List<Student> listOfStudents = new List<Student>();
+    studentCount--;
+}
 
-            while (counter != n)
-            {
-                string[] currStudent = Console.ReadLine().Split().ToArray();
+foreach (Student student in studentsList.OrderByDescending(x => x.Grade))
+{
+    Console.WriteLine(student);
+}
 
-                Student newStudent = new Student() 
-                {
-                    FirstName = currStudent[0],
-                    SecondName = currStudent[1],
-                    Grade = double.Parse(currStudent[2])
-                };
-                listOfStudents.Add(newStudent);
-                counter++;
-            }
+class Student
+{
+    public string FirstName { get; set; }
 
-            listOfStudents = listOfStudents.OrderByDescending(x => x.Grade).ToList();
-
-            foreach (Student student in listOfStudents)
-            {
-                Console.WriteLine(student);
-            }
-        } 
-        
-    }
-
-    class Student 
-    {
-        public string FirstName { get; set; }
-        public string SecondName { get; set; }
-        public double Grade { get; set; }
-
-        public override string ToString()
-        {
-            return $"{FirstName} {SecondName}: {Grade:f2}";
-        }
-    }
+    public string LastName { get; set; }
     
+    public double Grade  { get; set; }
+
+    public override string ToString()
+    {
+        return $"{FirstName} {LastName}: {Grade:f2}";
+    }
 }
