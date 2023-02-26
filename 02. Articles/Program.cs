@@ -1,149 +1,71 @@
-using System;
-using System.Linq;
-using System.Text;
 
-namespace _02.Articles
+string[] articleInput = Console.ReadLine().Split(", ", StringSplitOptions.RemoveEmptyEntries);
+
+string title = articleInput[0];
+string content = articleInput[1];
+string author = articleInput[2];
+
+Article article = new Article(title, content, author);
+
+int numOfCommands = int.Parse(Console.ReadLine());
+
+while (numOfCommands > 0)
 {
-    class Program
+    string[] commandInfo = Console.ReadLine().Split(": ", StringSplitOptions.RemoveEmptyEntries);
+
+    if (commandInfo[0] == "Edit")
     {
-        static void Main(string[] args)
-        {
-            string[] input = Console.ReadLine().Split(", ").ToArray();
-            int n = int.Parse(Console.ReadLine());
-            int counter = 0;
-
-            Article newArticle = new Article() 
-            {
-                Title = input[0],
-                Content = input[1],
-                Author = input[2]
-            };
-
-            while (counter != n)
-            {
-                string[] command = Console.ReadLine().Split(": ").ToArray();
-
-                if (command[0] == "Edit")
-                {
-                    newArticle.Edit(command[1]);
-                }
-                else if (command[0] == "ChangeAuthor")
-                {
-                    newArticle.ChangeAuthor(command[1]);
-                }
-                else if (command[0] == "Rename")
-                {
-                    newArticle.Rename(command[1]);
-                }
-                counter++;
-            }
-            Console.WriteLine(newArticle);
-        } 
-        
+        string newContent = commandInfo[1];
+        article.Edit(newContent);
+    }
+    else if (commandInfo[0] == "ChangeAuthor")
+    {
+        string newAuthor = commandInfo[1];
+        article.ChangeAuthor(newAuthor);
+    }
+    else if (commandInfo[0] == "Rename")
+    {
+        string newTitle = commandInfo[1];
+        article.Rename(newTitle);
     }
 
-    class Article
-    {
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public string Author { get; set; }
-
-        public void Edit(string newContent)
-        {
-            Content = newContent;
-        }
-
-        public void ChangeAuthor(string newAuthor)
-        {
-            Author = newAuthor;
-        }
-
-        public void Rename(string newTitle)
-        {
-            Title = newTitle;
-        }
-
-        public override string ToString()
-        {
-            //return $"{Title} - {Content}: {Author}";
-            StringBuilder sb = new StringBuilder($"{Title} - {Content}: {Author}");
-            return sb.ToString().TrimEnd();
-        }
-    }
+    numOfCommands--;
 }
-======================================================================================
-using System;
-using System.Linq;
-using System.Text;
 
-namespace _02.Articles
+Console.WriteLine(article);
+
+class Article
 {
-    class Program
+    public Article(string title, string content, string author)
     {
-        static void Main(string[] args)
-        {
-            string[] input = Console.ReadLine().Split(", ").ToArray();
-            int n = int.Parse(Console.ReadLine());
-            int counter = 0;
-
-            Article newArticle = new Article(input[0], input[1], input[2]);
-
-            while (counter != n)
-            {
-                string[] command = Console.ReadLine().Split(": ").ToArray();
-
-                if (command[0] == "Edit")
-                {
-                    newArticle.Edit(command[1]);
-                }
-                else if (command[0] == "ChangeAuthor")
-                {
-                    newArticle.ChangeAuthor(command[1]);
-                }
-                else if (command[0] == "Rename")
-                {
-                    newArticle.Rename(command[1]);
-                }
-                counter++;
-            }
-            Console.WriteLine(newArticle);
-        } 
-        
+        Title = title;
+        Content = content;
+        Author = author;
     }
 
-    class Article
+    public string Title { get; set; }
+
+    public string Content { get; set; }
+
+    public string Author { get; set; }
+
+    public void Edit(string newContent)
     {
-        public Article(string title, string content, string author)
-        {
-            Title = title;
-            Content = content;
-            Author = author;
-        }
+        Content = newContent;
+    }
 
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public string Author { get; set; }
+    public void ChangeAuthor(string newAuthor)
+    {
+        Author = newAuthor;
+    }
 
-        public void Edit(string newContent)
-        {
-            Content = newContent;
-        }
+    public void Rename(string newTitle)
+    {
+        Title = newTitle; 
+    }
 
-        public void ChangeAuthor(string newAuthor)
-        {
-            Author = newAuthor;
-        }
-
-        public void Rename(string newTitle)
-        {
-            Title = newTitle;
-        }
-
-        public override string ToString()
-        {
-            //return $"{Title} - {Content}: {Author}";
-            StringBuilder sb = new StringBuilder($"{Title} - {Content}: {Author}");
-            return sb.ToString().TrimEnd();
-        }
+    public override string ToString()
+    {
+        return $"{Title} - {Content}: {Author}";
     }
 }
