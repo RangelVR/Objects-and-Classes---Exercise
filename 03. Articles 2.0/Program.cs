@@ -30,7 +30,6 @@ else if (command == "content")
 else if (command == "author")
 {
     articleList = articleList.OrderBy(x => x.Author).ToList();
-
 }
 
 foreach (Article article in articleList)
