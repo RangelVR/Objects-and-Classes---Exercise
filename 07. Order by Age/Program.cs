@@ -1,65 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+string command = Console.ReadLine();
 
-namespace _07.Order_by_Age
+List<Person> personsList = new List<Person>();
+
+while (command != "End")
 {
-    class Person
+    string[] commInfo = command.Split();
+
+    string name = commInfo[0]; 
+    string iD = commInfo[1];
+    int age = int.Parse(commInfo[2]);
+
+    Person person = new Person(name, iD, age);
+    personsList.Add(person);
+
+    foreach (Person currPerson in personsList)
     {
-        public Person(string name, string id, int age)
+        if (currPerson.ID == iD)
         {
-            Name = name;
-            ID = id;
-            Age = age;
-        }
-        public string Name { get; set; }
-        public string ID { get; set; }
-        public int Age { get; set; }
-
-        public override string ToString()
-        {
-            string print = $"{Name} with ID: {ID} is {Age} years old.";
-
-            return print;
+            currPerson.Name = name;
+            currPerson.Age = age;
+            break;
         }
     }
 
-    class Program
+    command = Console.ReadLine();
+}
+
+foreach (Person currPerson in personsList.OrderBy(x => x.Age))
+{
+    Console.WriteLine(currPerson);
+}
+
+class Person
+{
+    public Person(string name, string iD, int age)
     {
-        static void Main(string[] args)
-        {
-            List<Person> list = new List<Person>();
+        Name = name;
+        ID = iD;
+        Age = age;
+    }
 
-            while (true)
-            {
-                string[] personArgs = Console.ReadLine().Split().ToArray();
+    public string Name { get; set; }
 
-                if (personArgs[0] == "End")
-                {
-                    break;
-                }
+    public string ID { get; set; }
 
-                string name = personArgs[0];
-                string id = personArgs[1];
-                int age = int.Parse(personArgs[2]);
+    public int Age { get; set; }
 
-                Person newPerson = new Person(name, id, age);
-                if (list.Any(x => x.ID == id))
-                {
-                    foreach (var person in list)
-                    {
-                        if (person.ID == id)
-                        {
-                            person.Name = name;
-                            person.Age = age;
-                        }
-                    }
-                    continue;
-                }
-                list.Add(newPerson);
-            }
-
-            Console.WriteLine(string.Join(Environment.NewLine, list.OrderBy(x => x.Age)));
-        }
+    public override string ToString()
+    {
+        string output = $"{Name} with ID: {ID} is {Age} years old.";
+        return output;
     }
 }
